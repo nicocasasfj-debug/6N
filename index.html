@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Para ti 🌸</title>
+    <title>Para ti 💛</title>
     <style>
-        /* Ajustes generales para que se vea perfecto en móvil */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* Forzamos la fuente nativa de Apple para que cuadre en su iPhone 13 */
+            font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, sans-serif;
         }
 
         body {
@@ -24,7 +24,6 @@
             text-align: center;
         }
 
-        /* Contenedores de las pantallas */
         .pantalla {
             position: absolute;
             width: 100%;
@@ -34,7 +33,7 @@
             justify-content: center;
             align-items: center;
             transition: opacity 1.2s ease, transform 1.2s ease;
-            padding: 20px;
+            padding: 5px; /* Menos padding para que el corazón sea más grande */
         }
 
         .oculta {
@@ -43,13 +42,13 @@
             transform: scale(0.95);
         }
 
-        /* Pantalla 1: El corazón inicial */
+        /* --- PANTALLA 1: INICIO --- */
         .pantalla-1 {
             z-index: 10;
             cursor: pointer;
         }
 
-        .corazon {
+        .corazon-amarillo {
             font-size: 60px;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
             animation: latido 1.5s infinite;
@@ -77,66 +76,55 @@
             opacity: 0.8;
         }
 
-        /* Pantalla 2: El ramo de flores y el mensaje */
+        /* --- PANTALLA 2: EL CORAZÓN GIGANTE PARA iPHONE --- */
         .pantalla-2 {
             z-index: 5;
-            background: radial-gradient(circle at center, rgba(60, 20, 80, 0.4) 0%, transparent 70%);
         }
 
-        /* Animación del ramo */
-        .ramo-contenedor {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            margin-bottom: 30px;
-        }
-
-        .flor {
-            position: absolute;
-            font-size: 40px;
+        .corazon-texto {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            /* Degradado de la foto original */
+            background: linear-gradient(180deg, #ff4d4d 0%, #ff1a75 50%, #9933ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 2px rgba(255, 26, 102, 0.2));
+            
+            margin-bottom: 40px; 
             opacity: 0;
-            filter: drop-shadow(0 0 10px rgba(255, 102, 178, 0.5));
+            transform: scale(0.8);
+            transition: all 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Posicionamiento para formar un ramo */
-        .f1 { top: 20%; left: 30%; font-size: 55px; z-index: 3; } /* Lirio central rosa */
-        .f2 { top: 35%; left: 10%; font-size: 45px; z-index: 2; }
-        .f3 { top: 35%; left: 55%; font-size: 45px; z-index: 2; }
-        .f4 { top: 10%; left: 15%; font-size: 40px; z-index: 1; }
-        .f5 { top: 10%; left: 50%; font-size: 40px; z-index: 1; }
-        .f6 { top: 50%; left: 30%; font-size: 60px; z-index: 4; } /* Base del ramo */
-
-        /* Animación de entrada de las flores */
-        .flor-animada {
-            animation: florecer 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-        
-        .f1.flor-animada { animation-delay: 0.2s; }
-        .f2.flor-animada { animation-delay: 0.4s; }
-        .f3.flor-animada { animation-delay: 0.6s; }
-        .f4.flor-animada { animation-delay: 0.5s; }
-        .f5.flor-animada { animation-delay: 0.7s; }
-        .f6.flor-animada { animation-delay: 0.1s; }
-
-        .mensaje-romantico {
-            max-width: 320px;
-            line-height: 1.6;
+        .corazon-texto.animado {
+            opacity: 1;
+            transform: scale(1);
         }
 
-        .titulo-mensaje {
-            font-size: 18px;
-            color: #ffb3d9;
-            margin-bottom: 15px;
-            font-style: italic;
+        .fila {
+            white-space: nowrap; /* Evita que ninguna palabra salte a la línea de abajo */
+            font-size: 3.8vw; /* Escala perfectamente al ancho del móvil */
+            font-weight: 700; /* Letra gordita para que parezca un dibujo sólido */
+            line-height: 1.1; 
+            letter-spacing: -0.2px;
         }
 
-        .texto-mensaje {
-            font-size: 15px;
+        .mensaje-abajo {
+            font-size: 16px;
             color: #e6d3f8;
-            font-weight: 300;
+            font-weight: 400;
+            max-width: 300px;
+            line-height: 1.5;
+            opacity: 0;
+            transition: opacity 1.5s ease 0.8s; 
         }
 
-        /* Keyframes */
+        .mensaje-abajo.animado {
+            opacity: 1;
+        }
+
         @keyframes latido {
             0% { transform: scale(1); }
             14% { transform: scale(1.15); }
@@ -149,18 +137,15 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
         }
-
-        @keyframes florecer {
-            0% { opacity: 0; transform: scale(0) translateY(30px) rotate(-15deg); }
-            100% { opacity: 1; transform: scale(1) translateY(0) rotate(0); }
-        }
     </style>
 </head>
 <body>
 
+    <audio id="musicaFondo" src="street-poem.mp3"></audio>
+
     <!-- PANTALLA 1: Botón de entrada -->
     <div id="intro" class="pantalla pantalla-1" onclick="abrirSorpresa()">
-        <div class="corazon">💛</div>
+        <div class="corazon-amarillo">💛</div>
         <div class="icono-dedo">👇</div>
         <div class="texto-portada">
             <h1>PARA TI</h1>
@@ -168,46 +153,49 @@
         </div>
     </div>
 
-    <!-- PANTALLA 2: Ramo de flores y mensaje -->
+    <!-- PANTALLA 2: Sorpresa -->
     <div id="sorpresa" class="pantalla pantalla-2 oculta">
         
-        <div class="ramo-contenedor">
-            <!-- Flores distribuidas para formar el ramo. Los lirios y flores rosas destacan -->
-            <div class="flor f6">💐</div>
-            <div class="flor f4">🌸</div>
-            <div class="flor f5">🌷</div>
-            <div class="flor f2">🌺</div>
-            <div class="flor f3">🌸</div>
-            <div class="flor f1">🌺</div> 
+        <!-- CORAZÓN ESTRUCTURADO PARA SAFARI EN iOS -->
+        <div id="forma-corazon" class="corazon-texto">
+            <div class="fila">te amo ti amo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ti amo te amo</div>
+            <div class="fila">je t'aime i love&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i love je t'aime</div>
+            <div class="fila">eu te amo mahal kita&nbsp;&nbsp;mahal kita eu te amo</div>
+            <div class="fila">aku cinta kamu ich liebe dich seni aku cinta</div>
+            <div class="fila">rakastan sinua kocham cię miluji tě rakastan</div>
+            <div class="fila">szeretlek te iubesc volim te te iubesc amo</div>
+            <div class="fila">ik hou van je jag älskar dig ik hou van</div>
+            <div class="fila">ndimakukonda ke a go rata ndimakukonda</div>
+            <div class="fila">main tumse pyar karta tumse pyar amo</div>
+            <div class="fila">ez te hez dikim man seni sevaman</div>
+            <div class="fila">es tevi mīlu ma armastan sind</div>
+            <div class="fila">waan ku jecelahay mi amas</div>
+            <div class="fila">te dua shumë te volim</div>
+            <div class="fila">seni seviyorum amo</div>
+            <div class="fila">je t'aime ti amo</div>
+            <div class="fila">eu te amo</div>
+            <div class="fila">te amo</div>
+            <div class="fila">🤍</div>
         </div>
 
-        <div class="mensaje-romantico">
-            <h2 class="titulo-mensaje">"a ver qué me ha dicho mi novio"</h2>
-            <p class="texto-mensaje">
-                Igual que aquellos lirios rosas de nuestro primer día, quería dejarte estas flores por aquí también. <br><br>
-                Te quiero mucho. 🤍
-            </p>
+        <div id="texto-final" class="mensaje-abajo">
+            <p>Esto es para recordarte que te quiero mucho 💛</p>
         </div>
 
     </div>
 
     <script>
         function abrirSorpresa() {
-            // Ocultar la pantalla 1
-            const intro = document.getElementById('intro');
-            intro.classList.add('oculta');
+            document.getElementById('intro').classList.add('oculta');
+            document.getElementById('sorpresa').classList.remove('oculta');
 
-            // Mostrar la pantalla 2
-            const sorpresa = document.getElementById('sorpresa');
-            sorpresa.classList.remove('oculta');
+            const musica = document.getElementById('musicaFondo');
+            musica.play().catch(e => console.log("Esperando interacción."));
 
-            // Disparar la animación de las flores con un pequeño retraso
             setTimeout(() => {
-                const flores = document.querySelectorAll('.flor');
-                flores.forEach(flor => {
-                    flor.classList.add('flor-animada');
-                });
-            }, 300);
+                document.getElementById('forma-corazon').classList.add('animado');
+                document.getElementById('texto-final').classList.add('animado');
+            }, 200);
         }
     </script>
 </body>
